@@ -3,6 +3,9 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const fs = require('fs')
+const moment = require('moment')
+let date = moment().format("MMM d h:mm")
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
@@ -10,11 +13,17 @@ const walletRouter = require('./routes/wallet');
 
 const app = express();
 
+// Set Up logging
+let accessLogStream = fs.createWriteStream(`./logs/requests_${date}.log`, {
+  interval: '1d', // rotate daily
+  path: path.join(__dirname, 'log')}, { flags: 'a' })
+logger.token('body', req => {return JSON.stringify(req.body)})
+app.use(logger(':date[clf] :method :url :body', { stream: accessLogStream }))
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
-app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());

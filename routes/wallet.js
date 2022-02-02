@@ -6,6 +6,7 @@ const parse = require('../utils/parseJson');
 router
     .route('/')
     .post((req, res) => {
+        // res.header({'ETag': '12345'})
         res.status(200).json({respond: req.body})
     })
 router
