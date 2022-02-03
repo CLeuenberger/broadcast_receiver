@@ -17,10 +17,13 @@
   "devDependencies": {
     "body-parser": "^1.19.1",
     "chalk": "^5.0.0",
+    "dotenv": "^15.0.0",
+    "file-stream-rotator": "^0.6.1",
     "lodash": "^4.17.21",
     "moment": "^2.29.1",
     "nodemon": "^2.0.15",
     "postcss": "^8.4.6",
-    "rfs": "^9.0.6"
+    "rfs": "^9.0.6",
+    "sqlite3": "^5.0.2"
   }
 }

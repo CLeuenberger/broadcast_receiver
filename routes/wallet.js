@@ -1,12 +1,16 @@
 const express = require('express');
 const _ = require('lodash');
 const router = express.Router();
+const sql = require('sqlite3').verbose();
 const parse = require('../utils/parseJson');
+const write = require('../utils/db_writer');
+const appFile = require('../app');
+write.create_table()
 
 router
     .route('/')
     .post((req, res) => {
-        // res.header({'ETag': '12345'})
+        write.write_table(req.body)
         res.status(200).json({respond: req.body})
     })
 router
