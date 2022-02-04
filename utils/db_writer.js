@@ -12,114 +12,95 @@ let create_table = function(){
     db.serialize(() => {
         db.run("CREATE TABLE IF NOT EXISTS broadcasts " +
             "(id INTEGER PRIMARY KEY, " +
-            "blockchain NUM," +
-            "currentBlock NUM," +
             "status TEXT," +
             "ethos_transaction_UUID TEXT," +
-            "transaction_hash," +
-            "ethos_coin_id TEXT," +
+            "user_id TEXT," +
             "coin_symbol TEXT," +
+            "ethos_coin_id TEXT," +
+            "transaction_hash," +
             "quantity NUM," +
-            "txn_fee NUM," +
+            "timestamp NUM," +
             "wallet_id TEXT," +
             "wallet_holding_id TEXT," +
-            "user_id TEXT," +
-            "user_address_UUID TEXT," +
-            "user_address TEXT," +
             "wallet_type TEXT," +
             "direction TEXT," +
+            "user_address TEXT," +
+            "user_address_UUID TEXT," +
             "external_address TEXT," +
-            "timestamp NUM," +
             "block_number NUM," +
-            "cursor TEXT," +
             "confirmations NUM," +
             "blocks_until_secured NUM," +
-            "destination TEXT," +
-            "type NUM)");
+            "txn_fee TEXT," +
+            "cursor TEXT)");
     });
 }
 
 let write_table = function(body) {
     db.serialize(() => {
         const {
-            blockchain,
-            currentBlock,
-        } = body.data
-        const {
             status,
             ethos_transaction_UUID,
-            transaction_hash,
-            ethos_coin_id,
+            user_id,
             coin_symbol,
+            ethos_coin_id,
+            transaction_hash,
             quantity,
-            txn_fee,
+            timestamp,
             wallet_id,
             wallet_holding_id,
-            user_id,
-            user_address_UUID,
-            user_address,
             wallet_type,
             direction,
-            external_address,
-            timestamp,
-            block_number,
-            cursor,
-            confirmations,
-            blocks_until_secured
-        } = body.data.transactions[0];
-        const {
-            destination, type
-        } = body
-        const stmt = db.prepare('INSERT INTO broadcasts (' +
-            'blockchain, ' +
-            'currentBlock, ' +
-            'status, ' +
-            'ethos_transaction_UUID, ' +
-            'transaction_hash,' +
-            'ethos_coin_id,' +
-            'coin_symbol, ' +
-            'quantity, ' +
-            'txn_fee,' +
-            'wallet_id,' +
-            'wallet_holding_id,' +
-            'user_id,' +
-            'user_address_UUID,' +
-            'user_address,' +
-            'wallet_type,' +
-            'direction,' +
-            'external_address,' +
-            'timestamp,' +
-            'block_number,' +
-            'cursor,' +
-            'confirmations,' +
-            'blocks_until_secured,' +
-            'destination,' +
-            'type) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
-        stmt.run(
-            blockchain,
-            currentBlock,
-            status,
-            ethos_transaction_UUID,
-            transaction_hash,
-            ethos_coin_id,
-            coin_symbol,
-            quantity,
-            txn_fee,
-            wallet_id,
-            wallet_holding_id,
-            user_id,
-            user_address_UUID,
             user_address,
-            wallet_type,
-            direction,
+            user_address_UUID,
             external_address,
-            timestamp,
             block_number,
-            cursor,
             confirmations,
             blocks_until_secured,
-            destination,
-            type);
+            txn_fee,
+            cursor
+        } = body
+        const stmt = db.prepare('INSERT INTO broadcasts (' +
+            'status, ' +
+            'ethos_transaction_UUID, ' +
+            'user_id, ' +
+            'coin_symbol, ' +
+            'ethos_coin_id,' +
+            'transaction_hash,' +
+            'quantity, ' +
+            'timestamp, ' +
+            'wallet_id,' +
+            'wallet_holding_id,' +
+            'wallet_type,' +
+            'direction,' +
+            'user_address,' +
+            'user_address_UUID,' +
+            'external_address,' +
+            'block_number,' +
+            'confirmations,' +
+            'blocks_until_secured,' +
+            'txn_fee,' +
+            'cursor) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
+        stmt.run(
+            status,
+            ethos_transaction_UUID,
+            user_id,
+            coin_symbol,
+            ethos_coin_id,
+            transaction_hash,
+            quantity,
+            timestamp,
+            wallet_id,
+            wallet_holding_id,
+            wallet_type,
+            direction,
+            user_address,
+            user_address_UUID,
+            external_address,
+            block_number,
+            confirmations,
+            blocks_until_secured,
+            txn_fee,
+            cursor);
         stmt.finalize();
         // res.status(200).json({respond: req.body});
     })
