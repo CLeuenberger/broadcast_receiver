@@ -1,6 +1,6 @@
 const sql = require('sqlite3').verbose();
-
-
+const moment = require('moment');
+let row_date = moment().format('YYYY-MM-DD')
 let create_table = function(){
     const db_port = process.env.NODE_ENV === 'test' ? 3001 : 3000;
     if (process.env.MODE === 'test') {
@@ -12,6 +12,7 @@ let create_table = function(){
     db.serialize(() => {
         db.run("CREATE TABLE IF NOT EXISTS broadcasts " +
             "(id INTEGER PRIMARY KEY, " +
+            "date DATE, " +
             "status TEXT," +
             "ethos_transaction_UUID TEXT," +
             "user_id TEXT," +
@@ -37,6 +38,7 @@ let create_table = function(){
 
 let write_table = function(body) {
     db.serialize(() => {
+        const date = row_date;
         const {
             status,
             ethos_transaction_UUID,
@@ -60,6 +62,7 @@ let write_table = function(body) {
             cursor
         } = body
         const stmt = db.prepare('INSERT INTO broadcasts (' +
+            'date, ' +
             'status, ' +
             'ethos_transaction_UUID, ' +
             'user_id, ' +
@@ -79,8 +82,9 @@ let write_table = function(body) {
             'confirmations,' +
             'blocks_until_secured,' +
             'txn_fee,' +
-            'cursor) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
+            'cursor) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
         stmt.run(
+            date,
             status,
             ethos_transaction_UUID,
             user_id,
