@@ -32,13 +32,15 @@ let create_table = function(){
             "confirmations NUM," +
             "blocks_until_secured NUM," +
             "txn_fee TEXT," +
-            "cursor TEXT)");
+            "cursor TEXT," +
+            "payload TEXT)");
     });
 }
 
 let write_table = function(body) {
     db.serialize(() => {
         const date = row_date;
+        const payload = JSON.stringify(body);
         const {
             status,
             ethos_transaction_UUID,
@@ -82,7 +84,8 @@ let write_table = function(body) {
             'confirmations,' +
             'blocks_until_secured,' +
             'txn_fee,' +
-            'cursor) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
+            'cursor,' +
+            'payload) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
         stmt.run(
             date,
             status,
@@ -104,7 +107,8 @@ let write_table = function(body) {
             confirmations,
             blocks_until_secured,
             txn_fee,
-            cursor);
+            cursor,
+            payload);
         stmt.finalize();
         // res.status(200).json({respond: req.body});
     })
