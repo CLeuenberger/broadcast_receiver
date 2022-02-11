@@ -60,7 +60,7 @@ let write_table = function(body) {
             blocks_until_secured,
             txn_fee,
             cursor
-        } = body
+        } = body.transactions[0]
         const stmt = db.prepare('INSERT INTO broadcasts (' +
             'date, ' +
             'status, ' +
