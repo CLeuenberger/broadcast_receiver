@@ -1,6 +1,5 @@
 const sql = require('sqlite3').verbose();
 const moment = require('moment');
-let row_date = moment().format('YYYY-MM-DD')
 let create_table = function(){
     const db_port = process.env.NODE_ENV === 'test' ? 3001 : 3000;
     if (process.env.MODE === 'test') {
@@ -39,7 +38,7 @@ let create_table = function(){
 
 let write_table = function(body) {
     db.serialize(() => {
-        const date = row_date;
+        const date = moment().format('YYYY-MM-DD');
         const payload = JSON.stringify(body);
         const {
             status,
