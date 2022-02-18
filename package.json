@@ -24,6 +24,8 @@
     "nodemon": "^2.0.15",
     "postcss": "^8.4.6",
     "rfs": "^9.0.6",
-    "sqlite3": "^5.0.2"
+    "sqlite3": "^5.0.2",
+    "websocket": "^1.0.34",
+    "websockets": "^0.2.0"
   }
 }

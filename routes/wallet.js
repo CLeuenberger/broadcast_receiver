@@ -5,12 +5,14 @@ const sql = require('sqlite3').verbose();
 const parse = require('../utils/parseJson');
 const write = require('../utils/db_writer');
 const appFile = require('../app');
+const tyche = require('../utils/tyche_websocket')
 write.create_table()
 
 router
     .route('/')
     .post((req, res) => {
         write.write_table(req.body)
+        tyche.publish_to_tests(req.body)
         res.status(200).json({respond: req.body})
     })
 router

@@ -49,13 +49,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/webhooks/wallet/activity', walletRouter);
 
-// Error Log Handler
-// let error_log_stream = fsrotate.getStream({
-//   date_format: 'YYYYMMDD',
-//   filename: `./logs/error.log`,
-//   frequency: 'daily',
-//   verbose: false
-// })
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
