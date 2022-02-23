@@ -24,8 +24,11 @@ let request_log_stream = fsrotate.getStream({
   frequency: 'daily',
   verbose: false
 })
+
 logger.token('req_body', req => {return JSON.stringify(req.body)})
-app.use(logger(':date[clf] :method :url :req_body', { stream: request_log_stream }))
+app.use(logger(':date[clf] :method :status :url :req_body', { stream: request_log_stream }))
+
+// Response Logging
 let response_log_stream = fsrotate.getStream({
   date_format: 'YYYYMMDD',
   filename: `./logs/responses.log`,
@@ -33,9 +36,8 @@ let response_log_stream = fsrotate.getStream({
   verbose: false
 })
 
-// Response Logging
 logger.token('res_body', res => {return JSON.stringify(res.body)})
-app.use(logger(':date[clf] :method :url :res_body', { stream: response_log_stream }))
+app.use(logger(':date[clf] :method :status :url :res_body', { stream: response_log_stream }))
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
