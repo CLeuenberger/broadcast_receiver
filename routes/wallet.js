@@ -11,7 +11,7 @@ write.create_table()
 router
     .route('/')
     .post((req, res) => {
-        res.status(200).json({respond: req.body})
+        res.status(200).json({req.body})
         write.write_table(req.body)
         tyche.publish_to_tests(req.body)
     })
