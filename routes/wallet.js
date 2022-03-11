@@ -11,9 +11,9 @@ write.create_table()
 router
     .route('/')
     .post((req, res) => {
+        res.status(200).json({respond: req.body})
         write.write_table(req.body)
         tyche.publish_to_tests(req.body)
-        res.status(200).json({respond: req.body})
     })
 router
     .route('/noBody')
@@ -23,26 +23,26 @@ router
 router
     .route('/400_userID_not_recognized')
     .post((req, res) => {
-        res.status(400).json({respond: {"errors":[{"message":"user_id not recognized by Voyager",
-                    "ethos_transaction_UUID":`${req.body.transactions[0].ethos_transaction_UUID}`}]}})
+        res.status(400).json({"errors":[{"message":"user_id not recognized by Voyager",
+                    "ethos_transaction_UUID":`${req.body.transactions[0].ethos_transaction_UUID}`}]})
     })
 router
     .route('/400_userAddress_not_found')
     .post((req, res) => {
-        res.status(400).json({respond: {"errors":[{"message":"user_address not found",
-                    "ethos_transaction_UUID":`${req.body.transactions[0].ethos_transaction_UUID}`}]}})
+        res.status(400).json({"errors":[{"message":"user_address not found",
+                    "ethos_transaction_UUID":`${req.body.transactions[0].ethos_transaction_UUID}`}]})
     })
 router
     .route('/400_quantity_0')
     .post((req, res) => {
-        res.status(400).json({respond: {"errors":[{"message":"quantity cannot be 0",
-                    "ethos_transaction_UUID":`${req.body.transactions[0].ethos_transaction_UUID}`}]}})
+        res.status(400).json({"errors":[{"message":"quantity cannot be 0",
+                    "ethos_transaction_UUID":`${req.body.transactions[0].ethos_transaction_UUID}`}]})
     })
 router
     .route('/500')
     .post((req, res) => {
-        res.status(500).json({respond: {"errors":[{"server_error": "Cannot handle request",
-                    "ethos_transaction_UUID":`${req.body.transactions[0].ethos_transaction_UUID}`}]}})
+        res.status(500).json({"errors":[{"server_error": "Cannot handle request",
+                    "ethos_transaction_UUID":`${req.body.transactions[0].ethos_transaction_UUID}`}]})
     })
 router
     .route('/missingKey')
